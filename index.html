@@ -3,196 +3,304 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ingresar código de invitación</title>
+  <title>Invitación | Gustavo & Sarita</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Forum&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #f7f3ee;
-      --card: #ffffff;
-      --text: #2f2a26;
-      --muted: #7e756d;
-      --accent: #9b7b5a;
-      --accent-dark: #7f6146;
-      --border: #eadfd6;
-      --error-bg: #fff1f1;
-      --error-text: #a63c3c;
+      --bg: #f3ede8;
+      --text: #526b56;
+      --button: #556f57;
+      --button-hover: #476048;
+      --shadow: rgba(73, 88, 74, 0.08);
+      --muted: #6f7f70;
+      --error-bg: rgba(255, 240, 240, 0.92);
+      --error-text: #944545;
     }
 
     * { box-sizing: border-box; }
 
     body {
-      margin: 0;
-      min-height: 100vh;
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Forum", serif;
+  color: #526b56;
+
+  background: 
+    linear-gradient(rgba(243, 237, 232, 0.6), rgba(243, 237, 232, 0.7)),
+    url("fondo 1.jpeg");
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+    }
+
+    .leaf,
+    .leaf::before,
+    .leaf::after {
+      position: absolute;
+      content: "";
+      border-radius: 100% 0;
+      opacity: 0.28;
+      pointer-events: none;
+    }
+
+    .leaf.left {
+      width: 140px;
+      height: 50px;
+      left: -18px;
+      top: 82px;
+      border: 2px solid rgba(120, 130, 120, 0.18);
+      transform: rotate(18deg);
+    }
+
+    .leaf.left::before {
+      width: 94px;
+      height: 34px;
+      left: 22px;
+      top: 50px;
+      border: 2px solid rgba(120, 130, 120, 0.16);
+      transform: rotate(26deg);
+    }
+
+    .leaf.right {
+      width: 130px;
+      height: 46px;
+      right: -26px;
+      top: 34px;
+      border: 2px solid rgba(120, 130, 120, 0.18);
+      transform: rotate(-26deg);
+    }
+
+    .leaf.right::before {
+      width: 100px;
+      height: 36px;
+      right: 10px;
+      top: 78px;
+      border: 2px solid rgba(120, 130, 120, 0.16);
+      transform: rotate(-16deg);
+    }
+
+    .shell {
+      width: 100%;
+      max-width: 760px;
+      min-height: 78vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 24px;
-      font-family: Arial, Helvetica, sans-serif;
-      color: var(--text);
-      background:
-        linear-gradient(rgba(248,244,239,0.82), rgba(248,244,239,0.9)),
-        url('https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1600&q=80') center/cover;
+      position: relative;
     }
 
-    .card {
+    .panel {
       width: 100%;
-      max-width: 460px;
-      background: rgba(255,255,255,0.96);
-      border: 1px solid var(--border);
-      border-radius: 28px;
-      padding: 34px 28px;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.08);
-      backdrop-filter: blur(6px);
-    }
-
-    .eyebrow {
-      text-transform: uppercase;
-      letter-spacing: 0.28em;
-      color: var(--muted);
-      font-size: 12px;
+      max-width: 560px;
       text-align: center;
-      margin-bottom: 10px;
+      padding: 20px 24px;
+      animation: fadeUp 0.9s ease;
     }
 
-    h1 {
-      margin: 0;
-      text-align: center;
-      font-size: 34px;
-      font-weight: 500;
-    }
-
-    .subtitle {
-      margin: 14px auto 24px;
-      max-width: 320px;
-      text-align: center;
-      color: var(--muted);
-      line-height: 1.55;
-      font-size: 15px;
-    }
-
-    .help-box {
-      background: #faf6f1;
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      padding: 14px 16px;
-      margin-bottom: 18px;
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.5;
-    }
-
-    label {
+    .logo {
+      width: min(250px, 92vw);
       display: block;
-      margin-bottom: 8px;
-      font-size: 14px;
-      color: var(--muted);
+      margin: 0 auto;
     }
 
-    input {
-      width: 100%;
-      padding: 15px 16px;
-      border-radius: 16px;
-      border: 1px solid var(--border);
-      font-size: 16px;
+    .guest-name {
+      margin-top: 28px;
+      min-height: 40px;
+      font-size: clamp(28px, 3vw, 42px);
+      color: var(--text);
+      letter-spacing: 0.04em;
       text-transform: uppercase;
-      letter-spacing: 0.08em;
-      outline: none;
     }
 
-    button {
-      width: 100%;
-      margin-top: 14px;
-      padding: 15px 18px;
+    .guest-count {
+      margin-top: 10px;
+      min-height: 28px;
+      font-size: clamp(18px, 2vw, 26px);
+      color: var(--muted);
+      letter-spacing: 0.03em;
+    }
+
+    .button-wrap {
+      margin-top: 26px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .open-btn {
+      min-width: 230px;
       border: 0;
       border-radius: 999px;
-      background: var(--accent);
-      color: #fff;
-      font-size: 16px;
+      background: var(--button);
+      color: #f5efe7;
+      padding: 16px 34px;
+      font-size: 22px;
+      letter-spacing: 0.04em;
       cursor: pointer;
-      transition: background 0.2s ease;
+      transition: transform 0.2s ease, background 0.2s ease;
+      box-shadow: 0 14px 30px rgba(85, 111, 87, 0.18);
+      font-family: "Forum", serif;
     }
 
-    button:hover { background: var(--accent-dark); }
-    button:disabled { opacity: 0.7; cursor: not-allowed; }
+    .open-btn:hover {
+      background: var(--button-hover);
+      transform: translateY(-1px);
+    }
+
+    .open-btn:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+      transform: none;
+    }
 
     .message {
-      display: none;
-      margin-top: 16px;
-      border-radius: 16px;
-      padding: 13px 14px;
-      font-size: 14px;
+      margin: 18px auto 0;
+      max-width: 420px;
+      border-radius: 18px;
+      padding: 12px 16px;
+      font-size: 16px;
       line-height: 1.45;
+      display: none;
+      background: var(--error-bg);
+      color: var(--error-text);
     }
 
     .message.show { display: block; }
-    .message.error { background: var(--error-bg); color: var(--error-text); }
 
-    .footer-note {
-      margin-top: 18px;
-      text-align: center;
+    .loading {
       color: var(--muted);
-      font-size: 13px;
+      font-size: 20px;
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(18px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .panel {
+        padding: 10px 8px;
+      }
+
+      .button-wrap {
+        margin-top: 22px;
+      }
+
+      .open-btn {
+        min-width: 210px;
+        font-size: 20px;
+        padding: 15px 28px;
+      }
+
+      .logo {
+        width: min(430px, 92vw);
+      }
+
+      .guest-name {
+        font-size: 30px;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="card">
-    <div class="eyebrow">Boda Gustavo &amp; Sarita</div>
-    <h1>Ingresa tu nombre completo</h1>
-    <p class="subtitle">
-      Escribe tu código de invitado para acceder a tu confirmación de asistencia personalizada.
-    </p>
+  <div class="leaf left"></div>
+  <div class="leaf right"></div>
 
-    <div class="help-box">
-      Tu código puede venir en tu invitación, en tu mensaje de WhatsApp o enviado directamente por los novios.
-      Ejemplo: <strong>GYS001</strong>
-    </div>
+  <main class="shell">
+    <section class="panel">
+      <img
+        class="logo"
+        src="logo GYS.png"
+        alt="Logo Gustavo y Sarita"
+      />
 
-    <form id="codeForm">
-      <label for="codigo">Nombre completo</label>
-      <input id="codigo" name="codigo" type="text" placeholder="Ejemplo: Juan Pérez" required />
-      <button id="submitBtn" type="submit">Continuar</button>
-    </form>
+      <div id="guestName" class="guest-name loading">Cargando invitado...</div>
 
-    <div id="message" class="message error"></div>
+      <div id="guestCount" class="guest-count"></div>
 
-    <div class="footer-note">
-      Si no encuentras tu código, comunícate con los novios para recibir ayuda.
-    </div>
-  </div>
+      <div class="button-wrap">
+        <button id="openBtn" class="open-btn" type="button" disabled>Abrir invitación</button>
+      </div>
+
+      <div id="message" class="message"></div>
+    </section>
+  </main>
 
   <script>
-    const RSVP_PAGE_URL = "https://cheerful-dodol-75b437.netlify.app/index.html";
+    const API_URL = "https://script.google.com/macros/s/AKfycby8yAn3b0ucFVS7rlyaTuWHhVkR_lsw7BYWwMWtQj7VEk53iQ7WQthiqeGwjzjS1V7y/exec";
+    const MAIN_INVITATION_URL = "https://gusysaramayo.my.canva.site/invitacin";
 
-    const form = document.getElementById("codeForm");
-    const codeInput = document.getElementById("codigo");
-    const message = document.getElementById("message");
-    const submitBtn = document.getElementById("submitBtn");
+    const guestNameEl = document.getElementById("guestName");
+    const guestCountEl = document.getElementById("guestCount");
+    const openBtn = document.getElementById("openBtn");
+    const messageEl = document.getElementById("message");
+
+    function getToken() {
+      const params = new URLSearchParams(window.location.search);
+      const tokenFromUrl = params.get("token");
+      const tokenFromStorage = localStorage.getItem("guestToken");
+      return tokenFromUrl || tokenFromStorage || "";
+    }
 
     function showError(text) {
-      message.textContent = text;
-      message.className = "message error show";
+      messageEl.textContent = text;
+      messageEl.className = "message show";
+      guestNameEl.textContent = "Invitado";
+      guestCountEl.textContent = "";
+      guestNameEl.classList.remove("loading");
+      openBtn.disabled = true;
     }
 
-    function setLoading(isLoading) {
-      submitBtn.disabled = isLoading;
-      submitBtn.textContent = isLoading ? "Validando código..." : "Continuar";
-    }
+    async function loadGuestName() {
+      const token = getToken().trim().toUpperCase();
 
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
-      message.className = "message error";
-
-      const codigo = codeInput.value.trim().toUpperCase();
-      codeInput.value = codigo;
-
-      if (!codigo) {
-        showError("Ingresa tu nombre completo.");
+      if (!token) {
+        showError("Falta el código del invitado en el enlace.");
         return;
       }
 
-      setLoading(true);
-      window.location.href = `${RSVP_PAGE_URL}?nombre=${encodeURIComponent(codigo)}`;
-    });
+      try {
+        localStorage.setItem("guestToken", token);
+
+        const response = await fetch(`${API_URL}?action=getGuest&token=${encodeURIComponent(token)}`);
+        const data = await response.json();
+
+        if (!response.ok || data.result !== "success") {
+          throw new Error(data.message || "No se encontró el invitado.");
+        }
+
+        const guestName = (data.guest && data.guest.nombre) ? data.guest.nombre : "Invitado";
+        const totalPersonas = Number(
+  (data.guest && data.guest.maxInvitados) || 0,
+        );
+        const cantidadTexto = totalPersonas === 1 ? "1 persona" : `${totalPersonas} personas`;
+
+        guestNameEl.textContent = guestName;
+        guestCountEl.textContent = `Cupo asignado para ${cantidadTexto}`;
+        guestNameEl.classList.remove("loading");
+        openBtn.disabled = false;
+
+        openBtn.addEventListener("click", () => {
+          window.location.href = MAIN_INVITATION_URL;
+        });
+      } catch (error) {
+        showError(error.message || "No se pudo cargar el nombre del invitado.");
+      }
+    }
+
+    loadGuestName();
   </script>
 </body>
 </html>
