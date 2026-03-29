@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Invitación | Gustavo & Sarita</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Forum&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f3ede8;
+      --text: #526b56;
+      --button: #556f57;
+      --button-hover: #476048;
+      --shadow: rgba(73, 88, 74, 0.08);
+      --muted: #6f7f70;
+      --error-bg: rgba(255, 240, 240, 0.92);
+      --error-text: #944545;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Forum", serif;
+  color: #526b56;
+
+  background: 
+    linear-gradient(rgba(243, 237, 232, 0.6), rgba(243, 237, 232, 0.7)),
+    url("fondo 1.jpeg");
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+    }
+
+    .leaf,
+    .leaf::before,
+    .leaf::after {
+      position: absolute;
+      content: "";
+      border-radius: 100% 0;
+      opacity: 0.28;
+      pointer-events: none;
+    }
+
+    .leaf.left {
+      width: 140px;
+      height: 50px;
+      left: -18px;
+      top: 82px;
+      border: 2px solid rgba(120, 130, 120, 0.18);
+      transform: rotate(18deg);
+    }
+
+    .leaf.left::before {
+      width: 94px;
+      height: 34px;
+      left: 22px;
+      top: 50px;
+      border: 2px solid rgba(120, 130, 120, 0.16);
+      transform: rotate(26deg);
+    }
+
+    .leaf.right {
+      width: 130px;
+      height: 46px;
+      right: -26px;
+      top: 34px;
+      border: 2px solid rgba(120, 130, 120, 0.18);
+      transform: rotate(-26deg);
+    }
+
+    .leaf.right::before {
+      width: 100px;
+      height: 36px;
+      right: 10px;
+      top: 78px;
+      border: 2px solid rgba(120, 130, 120, 0.16);
+      transform: rotate(-16deg);
+    }
+
+    .shell {
+      width: 100%;
+      max-width: 760px;
+      min-height: 78vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .panel {
+      width: 100%;
+      max-width: 560px;
+      text-align: center;
+      padding: 20px 24px;
+      animation: fadeUp 0.9s ease;
+    }
+
+    .logo {
+      width: min(250px, 92vw);
+      display: block;
+      margin: 0 auto;
+    }
+
+    .guest-name {
+      margin-top: 28px;
+      min-height: 40px;
+      font-size: clamp(28px, 3vw, 42px);
+      color: var(--text);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .guest-count {
+      margin-top: 10px;
+      min-height: 28px;
+      font-size: clamp(18px, 2vw, 26px);
+      color: var(--muted);
+      letter-spacing: 0.03em;
+    }
+
+    .button-wrap {
+      margin-top: 26px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .open-btn {
+      min-width: 230px;
+      border: 0;
+      border-radius: 999px;
+      background: var(--button);
+      color: #f5efe7;
+      padding: 16px 34px;
+      font-size: 22px;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      transition: transform 0.2s ease, background 0.2s ease;
+      box-shadow: 0 14px 30px rgba(85, 111, 87, 0.18);
+      font-family: "Forum", serif;
+    }
+
+    .open-btn:hover {
+      background: var(--button-hover);
+      transform: translateY(-1px);
+    }
+
+    .open-btn:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .message {
+      margin: 18px auto 0;
+      max-width: 420px;
+      border-radius: 18px;
+      padding: 12px 16px;
+      font-size: 16px;
+      line-height: 1.45;
+      display: none;
+      background: var(--error-bg);
+      color: var(--error-text);
+    }
+
+    .message.show { display: block; }
+
+    .loading {
+      color: var(--muted);
+      font-size: 20px;
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(18px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .panel {
+        padding: 10px 8px;
+      }
+
+      .button-wrap {
+        margin-top: 22px;
+      }
+
+      .open-btn {
+        min-width: 210px;
+        font-size: 20px;
+        padding: 15px 28px;
+      }
+
+      .logo {
+        width: min(430px, 92vw);
+      }
+
+      .guest-name {
+        font-size: 30px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="leaf left"></div>
+  <div class="leaf right"></div>
+
+  <main class="shell">
+    <section class="panel">
+      <img
+        class="logo"
+        src="logo GYS.png"
+        alt="Logo Gustavo y Sarita"
+      />
+
+      <div id="guestName" class="guest-name loading">Cargando invitado...</div>
+
+      <div id="guestCount" class="guest-count"></div>
+
+      <div class="button-wrap">
+        <button id="openBtn" class="open-btn" type="button" disabled>Abrir invitación</button>
+      </div>
+
+      <div id="message" class="message"></div>
+    </section>
+  </main>
+
+  <script>
+    const API_URL = "https://script.google.com/macros/s/AKfycby8yAn3b0ucFVS7rlyaTuWHhVkR_lsw7BYWwMWtQj7VEk53iQ7WQthiqeGwjzjS1V7y/exec";
+    const MAIN_INVITATION_URL = "https://gusysaramayo.my.canva.site/invitacin";
+
+    const guestNameEl = document.getElementById("guestName");
+    const guestCountEl = document.getElementById("guestCount");
+    const openBtn = document.getElementById("openBtn");
+    const messageEl = document.getElementById("message");
+
+    function getToken() {
+      const params = new URLSearchParams(window.location.search);
+      const tokenFromUrl = params.get("token");
+      const tokenFromStorage = localStorage.getItem("guestToken");
+      return tokenFromUrl || tokenFromStorage || "";
+    }
+
+    function showError(text) {
+      messageEl.textContent = text;
+      messageEl.className = "message show";
+      guestNameEl.textContent = "Invitado";
+      guestCountEl.textContent = "";
+      guestNameEl.classList.remove("loading");
+      openBtn.disabled = true;
+    }
+
+    async function loadGuestName() {
+      const token = getToken().trim().toUpperCase();
+
+      if (!token) {
+        showError("Falta el código del invitado en el enlace.");
+        return;
+      }
+
+      try {
+        localStorage.setItem("guestToken", token);
+
+        const response = await fetch(`${API_URL}?action=getGuest&token=${encodeURIComponent(token)}`);
+        const data = await response.json();
+
+        if (!response.ok || data.result !== "success") {
+          throw new Error(data.message || "No se encontró el invitado.");
+        }
+
+        const guestName = (data.guest && data.guest.nombre) ? data.guest.nombre : "Invitado";
+        const totalPersonas = Number(
+  (data.guest && data.guest.maxInvitados) || 0,
+        );
+        const cantidadTexto = totalPersonas === 1 ? "1 persona" : `${totalPersonas} personas`;
+
+        guestNameEl.textContent = guestName;
+        guestCountEl.textContent = `Cupo asignado para ${cantidadTexto}`;
+        guestNameEl.classList.remove("loading");
+        openBtn.disabled = false;
+
+        openBtn.addEventListener("click", () => {
+          window.location.href = MAIN_INVITATION_URL;
+        });
+      } catch (error) {
+        showError(error.message || "No se pudo cargar el nombre del invitado.");
+      }
+    }
+
+    loadGuestName();
+  </script>
+</body>
+</html>
