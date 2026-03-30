@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Confirmación de asistencia</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f7f5f1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+    }
+    .card {
+      background: white;
+      width: 100%;
+      max-width: 500px;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+    }
+    h1, p { text-align: center; }
+    input, select, textarea, button {
+      width: 100%;
+      margin-top: 12px;
+      padding: 12px;
+      border-radius: 12px;
+      border: 1px solid #ddd;
+      box-sizing: border-box;
+    }
+    button {
+      background: black;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    .msg {
+      margin-top: 14px;
+      padding: 12px;
+      border-radius: 12px;
+      display: none;
+    }
+    .ok { background: #edf8ef; color: #1f6b36; display: block; }
+    .error { background: #fff0f0; color: #a33a3a; display: block; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Confirmar asistencia</h1>
+    <p id="info">Cargando invitación...</p>
+
+    <form id="form" style="display:none;">
+      <input id="nombre" readonly>
+      <input id="telefono" placeholder="Tu teléfono" required>
+      <select id="asistencia">
+        <option value="sí">Sí asistiré</option>
+        <option value="no">No podré asistir</option>
+      </select>
+      <select id="acompanantes"></select>
+      <textarea id="mensaje" placeholder="Mensaje opcional"></textarea>
+      <button type="submit">Confirmar asistencia</button>
+    </form>
+
+    <div id="respuesta" class="msg"></div>
+  </div>
+
+  <script>
+    const API_URL = "https://script.google.com/macros/s/AKfycby8yAn3b0ucFVS7rlyaTuWHhVkR_lsw7BYWwMWtQj7VEk53iQ7WQthiqeGwjzjS1V7y/exec";
+
+    const info = document.getElementById("info");
+    const form = document.getElementById("form");
+    const respuesta = document.getElementById("respuesta");
+    const nombre = document.getElementById("nombre");
+    const telefono = document.getElementById("telefono");
+    const asistencia = document.getElementById("asistencia");
+    const acompanantes = document.getElementById("acompanantes");
+    const mensaje = document.getElementById("mensaje");
+
+    let invitado = null;
+
+    function getToken() {
+      const params = new URLSearchParams(window.location.search);
+      return params.get("nombre");
+    }
+
+    async function cargarInvitado() {
+      const token = getToken();
+
+      if (!token) {
+        info.textContent = "Falta el token del invitado.";
+        return;
+      }
+
+      try {
+        const res = await fetch(`${API_URL}?action=getGuest&token=${encodeURIComponent(token)}`);
+        const data = await res.json();
+
+        if (data.result !== "success") {
+          throw new Error(data.message || "No se encontró el invitado.");
+        }
+
+        invitado = data.guest;
+        nombre.value = invitado.nombre;
+        telefono.value = invitado.telefono || "";
+        info.textContent = `Hola ${invitado.nombre}, tienes ${invitado.maxInvitados} cupo(s) asignado(s).`;
+
+        acompanantes.innerHTML = "";
+        for (let i = 1; i <= Number(invitado.maxInvitados); i++) {
+          const option = document.createElement("option");
+          option.value = i;
+          option.textContent = i + (i === 1 ? " asistente" : " asistentes");
+          acompanantes.appendChild(option);
+        }
+
+        form.style.display = "block";
+      } catch (err) {
+        info.textContent = err.message;
+      }
+    }
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      try {
+        const res = await fetch(API_URL, {
+          method: "POST",
+          headers: {
+            "Content-Type": "text/plain;charset=utf-8"
+          },
+          body: JSON.stringify({
+            action: "confirmGuest",
+            token: invitado.token,
+            telefono: telefono.value,
+            asistencia: asistencia.value,
+            acompanantes: acompanantes.value,
+            mensaje: mensaje.value,
+            fechaRegistro: new Date().toISOString()
+          })
+        });
+
+        const data = await res.json();
+
+        if (data.result !== "success") {
+          throw new Error(data.message || "No se pudo guardar.");
+        }
+
+        respuesta.className = "msg ok";
+        respuesta.textContent = "¡Tu confirmación fue guardada correctamente!";
+        form.style.display = "none";
+      } catch (err) {
+        respuesta.className = "msg error";
+        respuesta.textContent = err.message || "Ocurrió un error.";
+      }
+    });
+
+    cargarInvitado();
+  </script>
+</body>
+</html>
