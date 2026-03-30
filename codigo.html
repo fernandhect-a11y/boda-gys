@@ -212,7 +212,7 @@
         const token = data.guest && data.guest.token;
 
         if (!token) {
-          throw new Error("No se encontró el código del invitado.");
+          throw new Error("No se encontró el token del invitado.");
         }
 
         window.location.href = `${RSVP_PAGE_URL}?token=${encodeURIComponent(token)}`;
