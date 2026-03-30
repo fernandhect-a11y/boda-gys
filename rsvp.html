@@ -5,6 +5,36 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Confirmación de asistencia</title>
   <style>
+    .opciones-asistencia {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.opcion-asistencia {
+  flex: 1;
+}
+
+.opcion-asistencia input {
+  display: none;
+}
+
+.opcion-asistencia span {
+  display: block;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  text-align: center;
+  cursor: pointer;
+  background: #f9f9f9;
+  transition: 0.2s ease;
+}
+
+.opcion-asistencia input:checked + span {
+  background: #5b735d;
+  color: white;
+  border-color: #5b735d;
+}
     body {
       font-family: Arial, sans-serif;
       background: #f7f5f1;
@@ -56,10 +86,17 @@
     <form id="form" style="display:none;">
       <input id="nombre" readonly>
       <input id="telefono" placeholder="Tu teléfono" required>
-      <select id="asistencia">
-        <option value="sí">Sí asistiré</option>
-        <option value="no">No podré asistir</option>
-      </select>
+      <div class="opciones-asistencia">
+  <label class="opcion-asistencia">
+    <input type="radio" name="asistencia" value="sí" checked>
+    <span>Sí asistiré</span>
+  </label>
+
+  <label class="opcion-asistencia">
+    <input type="radio" name="asistencia" value="no">
+    <span>No podré asistir</span>
+  </label>
+</div>
       <select id="acompanantes"></select>
       <textarea id="mensaje" placeholder="Mensaje opcional"></textarea>
       <button type="submit">Confirmar asistencia</button>
@@ -76,15 +113,19 @@
     const respuesta = document.getElementById("respuesta");
     const nombre = document.getElementById("nombre");
     const telefono = document.getElementById("telefono");
-    const asistencia = document.getElementById("asistencia");
+    
     const acompanantes = document.getElementById("acompanantes");
     const mensaje = document.getElementById("mensaje");
+    function getAsistencia() {
+  const seleccion = document.querySelector('input[name="asistencia"]:checked');
+  return seleccion ? seleccion.value : "";
+}
 
     let invitado = null;
 
     function getToken() {
       const params = new URLSearchParams(window.location.search);
-      return params.get("token");
+      return params.get("nombre");
     }
 
     async function cargarInvitado() {
@@ -135,7 +176,7 @@
             action: "confirmGuest",
             token: invitado.token,
             telefono: telefono.value,
-            asistencia: asistencia.value,
+            asistencia: getAsistencia(),
             acompanantes: acompanantes.value,
             mensaje: mensaje.value,
             fechaRegistro: new Date().toISOString()
@@ -159,5 +200,7 @@
 
     cargarInvitado();
   </script>
+</body>
+</html>
 </body>
 </html>
